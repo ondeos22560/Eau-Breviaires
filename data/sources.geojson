@@ -1,0 +1,24 @@
+{
+  "type": "FeatureCollection",
+  "name": "sources",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Source de la Vesgre",
+        "type": "Source",
+        "nature": "Source",
+        "source": "OpenStreetMap node 4577806151",
+        "statut": "Repère OSM vérifié par source secondaire",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.77787,
+          48.70844
+        ]
+      }
+    }
+  ]
+}

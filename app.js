@@ -1,5 +1,5 @@
 const c=document.getElementById('map'),ctx=c.getContext('2d');
-let center={lon:1.8131,lat:48.7075}, zoom=13.5, gps=null, dragging=false,last=null, data={water:[],hydro:[],commune:[]};
+let center={lon:1.8131,lat:48.7075}, zoom=13.5, gps=null, dragging=false,last=null, data={water:[],sources:[],points:[],hydro:[],commune:[]};
 let gpsWatchId=null;
 const tileCache=new Map();
 const R=6378137;
@@ -30,9 +30,9 @@ function polygon(rings,fill='rgba(0,126,183,.28)',stroke='#007eb7'){rings.forEac
 function drawFeature(f,color,kind='generic'){let g=f.geometry;if(!g)return;if(g.type==='Point')point(g.coordinates[0],g.coordinates[1],zoom<14?7:6,color);if(g.type==='LineString'&&zoom>=12.5)line(g.coordinates,color,3);if(g.type==='MultiLineString'&&zoom>=12.5)g.coordinates.forEach(x=>line(x,color,3));if(g.type==='Polygon'&&zoom>=14)polygon(g.coordinates);if(g.type==='MultiPolygon'&&zoom>=14)g.coordinates.forEach(x=>polygon(x))}
 function featureCenter(f){const g=f.geometry;if(!g)return null;if(g.type==='Point')return g.coordinates;if(g.type==='Polygon'&&g.coordinates?.[0]?.length){const a=g.coordinates[0];return [a.reduce((s,q)=>s+q[0],0)/a.length,a.reduce((s,q)=>s+q[1],0)/a.length]}if(g.type==='MultiPolygon'&&g.coordinates?.[0]?.[0]?.length){const a=g.coordinates[0][0];return [a.reduce((s,q)=>s+q[0],0)/a.length,a.reduce((s,q)=>s+q[1],0)/a.length]}return null}
 function updateAttribution(type){const el=document.getElementById('attribution');if(type==='osm'){el.innerHTML='© OpenStreetMap contributors';el.classList.remove('hidden')}else if(type==='satellite'){el.innerHTML='Photographies aériennes © IGN';el.classList.remove('hidden')}else el.classList.add('hidden')}
-function draw(){const base=activeBasemap();grid();if(base!=='local')drawTiles(base);updateAttribution(base);if(document.getElementById('showHydro').checked)data.hydro.forEach(f=>drawFeature(f,'#087fb5','hydro'));if(document.getElementById('showWater').checked)data.water.forEach(f=>drawFeature(f,'#007eb7','water'));if(document.getElementById('showCommune').checked)data.commune.forEach(f=>drawFeature(f,'#496d54'));if(gps)point(gps.lon,gps.lat,7,'#d22')}
+function draw(){const base=activeBasemap();grid();if(base!=='local')drawTiles(base);updateAttribution(base);if(document.getElementById('showHydro').checked)data.hydro.forEach(f=>drawFeature(f,'#087fb5','hydro'));if(document.getElementById('showWater').checked)data.water.forEach(f=>drawFeature(f,'#007eb7','water'));if(document.getElementById('showSources').checked)data.sources.forEach(f=>drawFeature(f,'#00a86b','source'));if(document.getElementById('showPoints').checked)data.points.forEach(f=>drawFeature(f,'#7a5cff','point'));if(document.getElementById('showCommune').checked)data.commune.forEach(f=>drawFeature(f,'#496d54'));if(gps)point(gps.lon,gps.lat,7,'#d22')}
 async function load(){
-  const sources=[['water','data/plans_eau.geojson'],['hydro','data/hydrographie.geojson'],['commune','data/commune.geojson']];
+  const sources=[['water','data/plans_eau.geojson'],['sources','data/sources.geojson'],['points','data/points_eau.geojson'],['hydro','data/hydrographie.geojson'],['commune','data/commune.geojson']];
   const errors=[];
   for(const [k,f] of sources){
     try{
@@ -43,7 +43,9 @@ async function load(){
     }catch(e){errors.push(`${k}: ${e.message}`)}
   }
   const waterLabel=document.querySelector('label[for="showWater"]');
-  if(waterLabel)waterLabel.textContent=`Points / plans d'eau (${data.water.length})`;
+  if(waterLabel)waterLabel.textContent=`Mares / plans d'eau (${data.water.length})`;
+  const sourceLabel=document.querySelector('label[for="showSources"]');if(sourceLabel)sourceLabel.textContent=`Sources / résurgences (${data.sources.length})`;
+  const pointLabel=document.querySelector('label[for="showPoints"]');if(pointLabel)pointLabel.textContent=`Autres points d'eau (${data.points.length})`;
   status.textContent=errors.length?`Données partielles • ${data.water.length} points d’eau chargés`:`${data.water.length} points / plans d’eau chargés`;
   draw();
 }
@@ -54,8 +56,8 @@ c.addEventListener('pointerdown',e=>{const p=coordFromEvent(e);pointers.set(e.po
 c.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId))return;const p=coordFromEvent(e);pointers.set(e.pointerId,p);if(pointers.size>=2){const d=pointerDistance();if(pinchDistance&&d){zoom=Math.max(10,Math.min(19,zoom+Math.log2(d/pinchDistance)));pinchDistance=d;draw()}return}if(!dragging)return;let dx=p.x-last.x,dy=p.y-last.y,m=merc(center.lon,center.lat),s=scale();center=inv(m.x-dx/s,m.y+dy/s);last=p;draw()});
 function endPointer(e){pointers.delete(e.pointerId);pinchDistance=null;if(pointers.size===1){dragging=true;last=[...pointers.values()][0]}else dragging=false}
 c.addEventListener('pointerup',endPointer);c.addEventListener('pointercancel',endPointer);c.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(10,Math.min(19,zoom+(e.deltaY<0?.5:-.5)));draw()},{passive:false});
-c.addEventListener('click',e=>{if(Math.abs(e.movementX||0)+Math.abs(e.movementY||0)>3)return;let p=coordFromEvent(e),best=null,bd=22;data.water.forEach(f=>{const cc=featureCenter(f);if(!cc)return;let q=screen(...cc),d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){best=f;bd=d}});if(best){let a=best.properties||{};popup.innerHTML=`<button onclick="popup.classList.add('hidden')">×</button><b>${a.nom||'Point d’eau'}</b>${a.type||''}<br><small>Source : ${a.source||'non renseignée'}<br>Potabilité : ${a.potabilite||'non renseignée'}<br>${a.statut||''}</small>`;popup.classList.remove('hidden')}else popup.classList.add('hidden')});
-layersBtn.onclick=()=>panel.classList.toggle('hidden');document.getElementById('closeLayers').onclick=()=>panel.classList.add('hidden');['showWater','showHydro','showCommune'].forEach(id=>document.getElementById(id).onchange=draw);
+c.addEventListener('click',e=>{if(Math.abs(e.movementX||0)+Math.abs(e.movementY||0)>3)return;let p=coordFromEvent(e),best=null,bd=22;const candidates=[...(showWater.checked?data.water:[]),...(showSources.checked?data.sources:[]),...(showPoints.checked?data.points:[])];candidates.forEach(f=>{const cc=featureCenter(f);if(!cc)return;let q=screen(...cc),d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){best=f;bd=d}});if(best){let a=best.properties||{};popup.innerHTML=`<button onclick="popup.classList.add('hidden')">×</button><b>${a.nom||a.name||'Point d’eau'}</b>${a.type||a.nature||''}<br><small>Source : ${a.source||'non renseignée'}<br>Potabilité : ${a.potabilite||'non renseignée'}<br>${a.statut||''}</small>`;popup.classList.remove('hidden')}else popup.classList.add('hidden')});
+layersBtn.onclick=()=>panel.classList.toggle('hidden');document.getElementById('closeLayers').onclick=()=>panel.classList.add('hidden');['showWater','showSources','showPoints','showHydro','showCommune'].forEach(id=>document.getElementById(id).onchange=draw);
 function setBasemap(which){online.checked=which==='osm';satellite.checked=which==='satellite';status.textContent=which==='osm'?'Fond OpenStreetMap en ligne':which==='satellite'?'Fond satellite en ligne':'Mode hors ligne prêt • données locales';draw()}
 online.onchange=()=>setBasemap(online.checked?'osm':'local');satellite.onchange=()=>setBasemap(satellite.checked?'satellite':'local');
 gpsBtn.onclick=()=>{
