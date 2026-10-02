@@ -6,10 +6,10 @@
       "type": "Feature",
       "properties": {
         "nom": "Source de la Vesgre",
-        "type": "Source",
+        "type": "Source / zone de source",
         "nature": "Source",
-        "source": "OpenStreetMap node 4577806151",
-        "statut": "Repère OSM vérifié par source secondaire",
+        "source": "OpenStreetMap node 4577806151 ; coordonnées confirmées par sources documentaires",
+        "statut": "Source localisée ; la tête de bassin est diffuse et saisonnière",
         "potabilite": "Non renseignée"
       },
       "geometry": {
@@ -17,6 +17,42 @@
         "coordinates": [
           1.77787,
           48.70844
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Source de la Guesle",
+        "type": "Source de cours d'eau",
+        "nature": "Source",
+        "source": "Références hydrographiques publiques / Annuaire-mairie 2026",
+        "statut": "Coordonnées de la source hydrographique",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.7963,
+          48.6663
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Source de la Guéville",
+        "type": "Source de cours d'eau",
+        "nature": "Source",
+        "source": "Références hydrographiques publiques / Annuaire-mairie 2026",
+        "statut": "Coordonnées de la source hydrographique",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.8562,
+          48.6691
         ]
       }
     }

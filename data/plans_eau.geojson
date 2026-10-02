@@ -154,6 +154,40 @@
           48.7272222
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Grande Mare",
+        "type": "Bassin / mare",
+        "source": "OpenStreetMap way 503127182",
+        "statut": "Repère OSM documenté",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.837,
+          48.7418
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Mare des Cormiers",
+        "type": "Mare / plan d'eau",
+        "source": "OpenStreetMap way 716022746",
+        "statut": "Repère OSM documenté",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.82463,
+          48.74514
+        ]
+      }
     }
   ]
 }

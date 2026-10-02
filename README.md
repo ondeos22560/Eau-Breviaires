@@ -40,3 +40,10 @@ Déposer tout le contenu du dossier à la racine du dépôt (ou adapter les chem
 
 
 V6 : symbologie métier renforcée (halo), points conservés à petite échelle, support Polygon/MultiPolygon à partir du zoom 14, hydrographie détaillée à partir du zoom 12.5, une seule popup et fermeture au clic hors objet. Les 9 repères V5 sont conservés ; aucune géométrie officielle non vérifiée n'a été inventée.
+
+
+## Données V8
+- 11 repères mares / plans d’eau (dont Grande Mare et Mare des Cormiers ajoutées).
+- 3 sources hydrographiques localisées : Vesgre, Guesle, Guéville.
+- Potabilité jamais déduite : elle reste « Non renseignée » sans donnée explicite.
+- hydrographie.geojson et points_eau.geojson restent volontairement vides tant qu’aucune géométrie locale fiable n’a été intégrée.
