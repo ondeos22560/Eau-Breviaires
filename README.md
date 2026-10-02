@@ -24,3 +24,10 @@ Déposer tout le contenu du dossier à la racine du dépôt (ou adapter les chem
 - OpenStreetMap : © contributeurs OpenStreetMap, ODbL.
 - Limites administratives : cible prévue API Découpage administratif / Etalab.
 - IGN / DDT78 : à documenter précisément lors de l'intégration des extractions.
+
+
+## V3
+- Photographies aériennes IGN (Géoplateforme WMTS ORTHOIMAGERY.ORTHOPHOTOS) à la place du fond Esri.
+- Zoom tactile à deux doigts.
+- Bouton × pour fermer le panneau Couches.
+- Libellé de données rendu indépendant du numéro de version.
