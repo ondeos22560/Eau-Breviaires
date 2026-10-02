@@ -37,3 +37,6 @@ Déposer tout le contenu du dossier à la racine du dépôt (ou adapter les chem
 - 9 repères de plans d’eau localisés à partir de sources publiques recoupées.
 - Potabilité laissée à « Non renseignée » en l’absence d’information explicite.
 - Hydrographie linéaire non inventée : intégration BD TOPAGE à poursuivre avec géométries officielles.
+
+
+V6 : symbologie métier renforcée (halo), points conservés à petite échelle, support Polygon/MultiPolygon à partir du zoom 14, hydrographie détaillée à partir du zoom 12.5, une seule popup et fermeture au clic hors objet. Les 9 repères V5 sont conservés ; aucune géométrie officielle non vérifiée n'a été inventée.
