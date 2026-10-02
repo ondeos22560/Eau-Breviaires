@@ -47,3 +47,10 @@ V6 : symbologie métier renforcée (halo), points conservés à petite échelle,
 - 3 sources hydrographiques localisées : Vesgre, Guesle, Guéville.
 - Potabilité jamais déduite : elle reste « Non renseignée » sans donnée explicite.
 - hydrographie.geojson et points_eau.geojson restent volontairement vides tant qu’aucune géométrie locale fiable n’a été intégrée.
+
+## V10 — interface et cache
+- OSM sélectionné par défaut au démarrage.
+- Symbole/couleur intégré directement à chaque ligne de couche ; suppression de la légende redondante sous les cases.
+- Position GPS conservée sur la carte sans ligne de légende supplémentaire.
+- Les points ajoutés localement restent enregistrés sur l'appareil et sont maintenant également cliquables pour ouvrir leur fiche.
+- Cache `eau-breviaires-v10` et stratégie réseau d'abord pour les fichiers de l'application, avec repli sur le cache hors ligne, afin d'éviter l'affichage persistant d'une ancienne interface après déploiement.
