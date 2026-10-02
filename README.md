@@ -56,11 +56,5 @@ V6 : symbologie métier renforcée (halo), points conservés à petite échelle,
 - Cache `eau-breviaires-v10` et stratégie réseau d'abord pour les fichiers de l'application, avec repli sur le cache hors ligne, afin d'éviter l'affichage persistant d'une ancienne interface après déploiement.
 
 
-## V11 — finalisation terrain
-- Hydrographie : chargement des tronçons officiels `BDTOPO_V3:troncon_hydrographique` via le WFS de la Géoplateforme IGN sur le secteur des Bréviaires ; mise en cache locale après une première récupération réussie.
-- Le nombre de tronçons hydrographiques chargés est affiché directement dans la ligne de couche.
-- Les points ajoutés localement peuvent être supprimés depuis leur fiche, avec confirmation.
-- Les points des données de référence ne sont pas supprimables par ce bouton.
-- Cache applicatif porté à `eau-breviaires-v11`.
-
-La contribution utilisateur reste locale à l'appareil dans cette version : un partage multi-utilisateurs nécessite un stockage serveur/API.
+## V11 – données réelles
+Secteur de travail : 1.70–1.90 E / 48.64–48.76 N. Hydrographie et polygones de plans d’eau extraits de BD TOPAGE 2026. Sources et autres détails hydrographiques extraits de BD TOPO 3.5 D078 du 15/06/2026. Les 11 repères de mares/plans d’eau de la V10 sont conservés. Potabilité non renseignée par défaut.
