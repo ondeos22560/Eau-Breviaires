@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","name":"commune","features":[{"type":"Feature","properties":{"nom":"Les Bréviaires","insee":"78108","note":"Point central indicatif, le contour officiel sera ajouté lors de l'intégration de l'extrait administratif."},"geometry":{"type":"Point","coordinates":[1.8131,48.7075]}}]}
