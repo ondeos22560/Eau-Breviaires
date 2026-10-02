@@ -31,3 +31,9 @@ Déposer tout le contenu du dossier à la racine du dépôt (ou adapter les chem
 - Zoom tactile à deux doigts.
 - Bouton × pour fermer le panneau Couches.
 - Libellé de données rendu indépendant du numéro de version.
+
+
+## V4 — données eau
+- 9 repères de plans d’eau localisés à partir de sources publiques recoupées.
+- Potabilité laissée à « Non renseignée » en l’absence d’information explicite.
+- Hydrographie linéaire non inventée : intégration BD TOPAGE à poursuivre avec géométries officielles.

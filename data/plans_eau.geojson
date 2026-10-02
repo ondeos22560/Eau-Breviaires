@@ -1,1 +1,159 @@
-{"type":"FeatureCollection","name":"plans_eau","features":[{"type":"Feature","properties":{"nom":"Mare au Chanvre","type":"Mare / plan d'eau","source":"OpenStreetMap","osm_id":"way/716023387","statut":"Localisation vérifiée via source OSM secondaire; géométrie surfacique à intégrer ultérieurement","potabilite":"Non renseignée"},"geometry":{"type":"Point","coordinates":[1.81792,48.70194]}}]}
+{
+  "type": "FeatureCollection",
+  "name": "plans_eau",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Mare au Chanvre",
+        "type": "Mare / plan d’eau",
+        "source": "OpenStreetMap (way 716023387)",
+        "statut": "Localisation vérifiée par source OSM secondaire",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.81792,
+          48.70194
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Mare aux Couleuvres",
+        "type": "Réservoir / plan d’eau",
+        "source": "OpenStreetMap (way 383077498)",
+        "statut": "Localisation vérifiée par source OSM secondaire",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.8298,
+          48.713
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Mares de Vilpert",
+        "type": "Mare / plan d’eau",
+        "source": "OpenStreetMap (way 138113161)",
+        "statut": "Localisation vérifiée par source OSM secondaire",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.78146,
+          48.71031
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Étang de Bourgneuf",
+        "type": "Étang / plan d’eau",
+        "source": "OpenStreetMap (way 110039655)",
+        "statut": "Localisation vérifiée par source OSM secondaire",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.8131,
+          48.72408
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Étang de Corbet",
+        "type": "Étang / plan d’eau",
+        "source": "OpenStreetMap (way 110039653)",
+        "statut": "Localisation vérifiée par source OSM secondaire",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.82775,
+          48.71877
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Étang de Pourras",
+        "type": "Étang / plan d’eau",
+        "source": "PNR Haute Vallée de Chevreuse / publication scientifique",
+        "statut": "Coordonnées publiées 48°42′52″N, 1°50′39″E",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.8441667,
+          48.7144444
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Étang de Saint-Hubert",
+        "type": "Étang / plan d’eau",
+        "source": "OpenStreetMap (way 604246799) / GeoNames",
+        "statut": "Localisation recoupée avec AAPPMA Le Perray",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.85076,
+          48.71145
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Étang de pêcherie de Saint-Hubert",
+        "type": "Étang / plan d’eau",
+        "source": "OpenStreetMap (way 604246796)",
+        "statut": "Localisation vérifiée par source OSM secondaire",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.85744,
+          48.70918
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nom": "Étangs de Hollande",
+        "type": "Ensemble de six étangs artificiels",
+        "source": "IGN/Géoportail, PNR Haute Vallée de Chevreuse, sources patrimoniales",
+        "statut": "Repère général de l’ensemble ; les six étangs sont Petit Hollande, Grand Hollande, Bourgneuf, Corbet, Pourras et Saint-Hubert",
+        "potabilite": "Non renseignée"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.8038889,
+          48.7272222
+        ]
+      }
+    }
+  ]
+}
