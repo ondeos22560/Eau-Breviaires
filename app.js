@@ -29,7 +29,22 @@ function line(coords,color='#2681a6',w=2){ctx.beginPath();coords.forEach((q,i)=>
 function drawFeature(f,color){let g=f.geometry;if(!g)return;if(g.type==='Point')point(g.coordinates[0],g.coordinates[1],6,color);if(g.type==='LineString')line(g.coordinates,color,2);if(g.type==='MultiLineString')g.coordinates.forEach(x=>line(x,color,2));}
 function updateAttribution(type){const el=document.getElementById('attribution');if(type==='osm'){el.innerHTML='© OpenStreetMap contributors';el.classList.remove('hidden')}else if(type==='satellite'){el.innerHTML='Photographies aériennes © IGN';el.classList.remove('hidden')}else el.classList.add('hidden')}
 function draw(){const base=activeBasemap();grid();if(base!=='local')drawTiles(base);updateAttribution(base);if(document.getElementById('showHydro').checked)data.hydro.forEach(f=>drawFeature(f,'#2585ad'));if(document.getElementById('showWater').checked)data.water.forEach(f=>drawFeature(f,'#1976a8'));if(document.getElementById('showCommune').checked)data.commune.forEach(f=>drawFeature(f,'#496d54'));if(gps)point(gps.lon,gps.lat,7,'#d22')}
-async function load(){for(const [k,f] of [['water','data/plans_eau.geojson'],['hydro','data/hydrographie.geojson'],['commune','data/commune.geojson']]){try{let j=await fetch(f);data[k]=(await j.json()).features||[]}catch(e){}}draw()}
+async function load(){
+  const sources=[['water','data/plans_eau.geojson'],['hydro','data/hydrographie.geojson'],['commune','data/commune.geojson']];
+  const errors=[];
+  for(const [k,f] of sources){
+    try{
+      const j=await fetch(f,{cache:'no-store'});
+      if(!j.ok)throw new Error(`HTTP ${j.status}`);
+      const geo=await j.json();
+      data[k]=Array.isArray(geo.features)?geo.features:[];
+    }catch(e){errors.push(`${k}: ${e.message}`)}
+  }
+  const waterLabel=document.querySelector('label[for="showWater"]');
+  if(waterLabel)waterLabel.textContent=`Points / plans d'eau (${data.water.length})`;
+  status.textContent=errors.length?`Données partielles • ${data.water.length} points d’eau chargés`:`${data.water.length} points / plans d’eau chargés`;
+  draw();
+}
 function coordFromEvent(e){let rect=c.getBoundingClientRect();return{x:e.clientX-rect.left,y:e.clientY-rect.top}}
 const pointers=new Map();let pinchDistance=null;
 function pointerDistance(){const a=[...pointers.values()];return a.length<2?null:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)}
