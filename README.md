@@ -54,3 +54,13 @@ V6 : symbologie métier renforcée (halo), points conservés à petite échelle,
 - Position GPS conservée sur la carte sans ligne de légende supplémentaire.
 - Les points ajoutés localement restent enregistrés sur l'appareil et sont maintenant également cliquables pour ouvrir leur fiche.
 - Cache `eau-breviaires-v10` et stratégie réseau d'abord pour les fichiers de l'application, avec repli sur le cache hors ligne, afin d'éviter l'affichage persistant d'une ancienne interface après déploiement.
+
+
+## V11 — finalisation terrain
+- Hydrographie : chargement des tronçons officiels `BDTOPO_V3:troncon_hydrographique` via le WFS de la Géoplateforme IGN sur le secteur des Bréviaires ; mise en cache locale après une première récupération réussie.
+- Le nombre de tronçons hydrographiques chargés est affiché directement dans la ligne de couche.
+- Les points ajoutés localement peuvent être supprimés depuis leur fiche, avec confirmation.
+- Les points des données de référence ne sont pas supprimables par ce bouton.
+- Cache applicatif porté à `eau-breviaires-v11`.
+
+La contribution utilisateur reste locale à l'appareil dans cette version : un partage multi-utilisateurs nécessite un stockage serveur/API.

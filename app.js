@@ -42,11 +42,30 @@ async function load(){
       data[k]=Array.isArray(geo.features)?geo.features:[];
     }catch(e){errors.push(`${k}: ${e.message}`)}
   }
+  // Hydrographie officielle : repli sur le WFS IGN si le GeoJSON local ne contient pas encore de tronçons.
+  // Le résultat est conservé localement pour les ouvertures suivantes, y compris hors connexion.
+  if(!data.hydro.length){
+    try{
+      const saved=JSON.parse(localStorage.getItem('eauBreviairesHydro')||'null');
+      if(saved&&Array.isArray(saved.features))data.hydro=saved.features;
+    }catch(e){}
+    try{
+      const hydroUrl='https://data.geopf.fr/wfs/ows?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=BDTOPO_V3:troncon_hydrographique&SRSNAME=EPSG:4326&BBOX=1.70,48.65,1.95,48.76,EPSG:4326&COUNT=5000&outputFormat=application/json';
+      const r=await fetch(hydroUrl,{cache:'no-store'});
+      if(!r.ok)throw new Error(`HTTP ${r.status}`);
+      const geo=await r.json();
+      if(Array.isArray(geo.features)&&geo.features.length){
+        data.hydro=geo.features;
+        localStorage.setItem('eauBreviairesHydro',JSON.stringify({type:'FeatureCollection',features:geo.features}));
+      }
+    }catch(e){if(!data.hydro.length)errors.push(`hydro IGN: ${e.message}`)}
+  }
   const waterLabel=document.querySelector('label[for="showWater"]');
   if(waterLabel)waterLabel.innerHTML=`<span class="dot water"></span>Mares / plans d'eau (${data.water.length})`;
   const sourceLabel=document.querySelector('label[for="showSources"]');if(sourceLabel)sourceLabel.innerHTML=`<span class="dot source"></span>Sources / résurgences (${data.sources.length})`;
   const pointLabel=document.querySelector('label[for="showPoints"]');if(pointLabel)pointLabel.innerHTML=`<span class="dot other-water"></span>Autres points d'eau (${data.points.length+userPoints.length})`;
-  status.textContent=errors.length?`Données partielles • ${data.water.length} points d’eau chargés`:`${data.water.length} points / plans d’eau chargés`;
+  const hydroLabel=document.querySelector('label[for="showHydro"]');if(hydroLabel)hydroLabel.innerHTML=`<span class="line-key hydro-key"></span>Hydrographie (${data.hydro.length})`;
+  status.textContent=errors.length?`Données partielles • ${data.water.length} points d’eau • ${data.hydro.length} tronçons hydro`:`${data.water.length} points / plans d’eau • ${data.hydro.length} tronçons hydro`;
   draw();
 }
 function coordFromEvent(e){let rect=c.getBoundingClientRect();return{x:e.clientX-rect.left,y:e.clientY-rect.top}}
@@ -56,7 +75,7 @@ c.addEventListener('pointerdown',e=>{const p=coordFromEvent(e);pointers.set(e.po
 c.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId))return;const p=coordFromEvent(e);pointers.set(e.pointerId,p);if(pointers.size>=2){const d=pointerDistance();if(pinchDistance&&d){zoom=Math.max(10,Math.min(19,zoom+Math.log2(d/pinchDistance)));pinchDistance=d;draw()}return}if(!dragging)return;let dx=p.x-last.x,dy=p.y-last.y,m=merc(center.lon,center.lat),s=scale();center=inv(m.x-dx/s,m.y+dy/s);last=p;draw()});
 function endPointer(e){pointers.delete(e.pointerId);pinchDistance=null;if(pointers.size===1){dragging=true;last=[...pointers.values()][0]}else dragging=false}
 c.addEventListener('pointerup',endPointer);c.addEventListener('pointercancel',endPointer);c.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(10,Math.min(19,zoom+(e.deltaY<0?.5:-.5)));draw()},{passive:false});
-c.addEventListener('click',e=>{if(Math.abs(e.movementX||0)+Math.abs(e.movementY||0)>3)return;let p=coordFromEvent(e);if(addMode){const m=merc(center.lon,center.lat),s=scale(),ll=inv(m.x+(p.x-innerWidth/2)/s,m.y-(p.y-innerHeight/2)/s);addLocation=ll;addCoords.textContent=`Position : ${ll.lat.toFixed(6)}, ${ll.lon.toFixed(6)}`;addForm.classList.remove('hidden');addMode=false;status.textContent='Compléter la fiche du point';return}let best=null,bd=22;const candidates=[...(showWater.checked?data.water:[]),...(showSources.checked?data.sources:[]),...(showPoints.checked?[...data.points,...userPoints]:[])];candidates.forEach(f=>{const cc=featureCenter(f);if(!cc)return;let q=screen(...cc),d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){best=f;bd=d}});if(best){let a=best.properties||{};popup.innerHTML=`<button onclick="popup.classList.add('hidden')">×</button><b>${a.nom||a.name||'Point d’eau'}</b>${a.type||a.nature||''}<br><small>Source : ${a.source||'non renseignée'}<br>Potabilité : ${a.potabilite||'non renseignée'}<br>${a.statut||''}</small>`;popup.classList.remove('hidden')}else popup.classList.add('hidden')});
+c.addEventListener('click',e=>{if(Math.abs(e.movementX||0)+Math.abs(e.movementY||0)>3)return;let p=coordFromEvent(e);if(addMode){const m=merc(center.lon,center.lat),s=scale(),ll=inv(m.x+(p.x-innerWidth/2)/s,m.y-(p.y-innerHeight/2)/s);addLocation=ll;addCoords.textContent=`Position : ${ll.lat.toFixed(6)}, ${ll.lon.toFixed(6)}`;addForm.classList.remove('hidden');addMode=false;status.textContent='Compléter la fiche du point';return}let best=null,bd=22;const candidates=[...(showWater.checked?data.water:[]),...(showSources.checked?data.sources:[]),...(showPoints.checked?[...data.points,...userPoints]:[])];candidates.forEach(f=>{const cc=featureCenter(f);if(!cc)return;let q=screen(...cc),d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){best=f;bd=d}});if(best){let a=best.properties||{},userIndex=userPoints.indexOf(best);popup.innerHTML=`<button class="popup-close" onclick="popup.classList.add('hidden')">×</button><b>${a.nom||a.name||'Point d’eau'}</b>${a.type||a.nature||''}<br><small>Source : ${a.source||'non renseignée'}<br>Potabilité : ${a.potabilite||'non renseignée'}<br>${a.statut||''}</small>${userIndex>=0?'<button id="deleteUserPoint" class="delete-point" type="button">Supprimer ce point</button>':''}`;popup.classList.remove('hidden');if(userIndex>=0){document.getElementById('deleteUserPoint').onclick=()=>{if(!confirm('Supprimer définitivement ce point ajouté sur cet appareil ?'))return;userPoints.splice(userIndex,1);localStorage.setItem('eauBreviairesUserPoints',JSON.stringify(userPoints));const pointLabel=document.querySelector('label[for="showPoints"]');if(pointLabel)pointLabel.innerHTML=`<span class="dot other-water"></span>Autres points d'eau (${data.points.length+userPoints.length})`;popup.classList.add('hidden');status.textContent='Point supprimé de cet appareil';draw()}}}else popup.classList.add('hidden')});
 layersBtn.onclick=()=>panel.classList.toggle('hidden');document.getElementById('closeLayers').onclick=()=>panel.classList.add('hidden');['showWater','showSources','showPoints','showHydro','showCommune'].forEach(id=>document.getElementById(id).onchange=draw);
 function setBasemap(which){online.checked=which==='osm';satellite.checked=which==='satellite';status.textContent=which==='osm'?'Fond OpenStreetMap en ligne':which==='satellite'?'Fond satellite en ligne':'Mode hors ligne prêt • données locales';draw()}
 online.onchange=()=>setBasemap(online.checked?'osm':'local');satellite.onchange=()=>setBasemap(satellite.checked?'satellite':'local');
@@ -70,7 +89,7 @@ gpsBtn.onclick=()=>{
 try{userPoints=JSON.parse(localStorage.getItem('eauBreviairesUserPoints')||'[]');if(!Array.isArray(userPoints))userPoints=[]}catch(e){userPoints=[]}
 addBtn.onclick=()=>{addMode=true;addLocation=null;popup.classList.add('hidden');panel.classList.add('hidden');status.textContent='Touchez la carte à l’emplacement du point à ajouter'};
 closeAdd.onclick=()=>{addForm.classList.add('hidden');addLocation=null;status.textContent='Ajout annulé'};
-saveAdd.onclick=()=>{if(!addLocation)return;const type=addType.value,name=addName.value.trim(),comment=addComment.value.trim();const f={type:'Feature',properties:{nom:name||type,type,source:'Contribution utilisateur locale',potabilite:'Non renseignée',statut:'À vérifier',commentaire:comment},geometry:{type:'Point',coordinates:[addLocation.lon,addLocation.lat]}};userPoints.push(f);localStorage.setItem('eauBreviairesUserPoints',JSON.stringify(userPoints));addForm.classList.add('hidden');addName.value='';addComment.value='';addLocation=null;const pointLabel=document.querySelector('label[for="showPoints"]');if(pointLabel)pointLabel.innerHTML=`<span class="dot other-water"></span>Autres points d'eau (${data.points.length+userPoints.length})`;status.textContent='Point enregistré sur cet appareil • à vérifier';draw()};
+saveAdd.onclick=()=>{if(!addLocation)return;const type=addType.value,name=addName.value.trim(),comment=addComment.value.trim();const f={type:'Feature',properties:{nom:name||type,type,local:true,source:'Contribution utilisateur locale',potabilite:'Non renseignée',statut:'À vérifier',commentaire:comment},geometry:{type:'Point',coordinates:[addLocation.lon,addLocation.lat]}};userPoints.push(f);localStorage.setItem('eauBreviairesUserPoints',JSON.stringify(userPoints));addForm.classList.add('hidden');addName.value='';addComment.value='';addLocation=null;const pointLabel=document.querySelector('label[for="showPoints"]');if(pointLabel)pointLabel.innerHTML=`<span class="dot other-water"></span>Autres points d'eau (${data.points.length+userPoints.length})`;status.textContent='Point enregistré sur cet appareil • à vérifier';draw()};
 
 setBasemap('osm');
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});addEventListener('resize',resize);resize();load();
