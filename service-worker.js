@@ -1,4 +1,4 @@
-const CACHE='eau-breviaires-v30';
+const CACHE='eau-breviaires-v32';
 const TILES='eau-breviaires-tuiles';
 const MAX_TILES=800;
 const CORE=['./','./index.html','./style.css','./app.js','./manifest.json','./docs/Installation_Eau_Breviaires.pdf','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-512-maskable.png','./data/eau.geojson','./data/sources.geojson','./data/points_eau.geojson','./data/plans_eau.geojson','./data/hydrographie.geojson','./data/commune.geojson'];

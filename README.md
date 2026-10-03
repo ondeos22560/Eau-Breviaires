@@ -108,3 +108,10 @@ V30 : interface mobile terrain avec GPS et Street View fixes en haut, tiroir de 
 - Clic/toucher sur un objet hydrographique : mise en évidence de la géométrie réellement sélectionnée sur toute sa longueur.
 - Popup plus compacte et légèrement transparente ; valeur Source volontairement plus discrète.
 - Aucun changement des GeoJSON ni du moteur GPS/zoom/Street View/KML.
+
+
+## V31
+- Popup plus étroite sur PC.
+- Transparence rendue perceptible tout en conservant la lisibilité.
+- Sur mobile, largeur utile conservée et titres longs autorisés sur plusieurs lignes.
+- Aucun changement des données ni des fonctions cartographiques.
