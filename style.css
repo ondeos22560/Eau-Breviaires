@@ -60,3 +60,28 @@ html,body,#app{height:100%;height:100dvh}
   .popup{width:calc(100% - 18px)!important;max-width:390px;padding:15px;border-radius:19px}
   .popup-title b{font-size:19px}.popup-symbol{width:40px;height:40px;flex-basis:40px}.popup-row{grid-template-columns:86px 1fr;padding:8px 9px;font-size:12.5px}
 }
+
+/* V29 — interface mobile terrain : GPS + Street View fixes, fonctions dans un tiroir bas */
+.mobile-quick,.mobile-drawer-handle,.mobile-drawer,.mobile-subpanel{display:none}
+@media(max-width:600px){
+  .top{display:none!important}
+  .mobile-quick{display:contents}
+  .quick-btn{position:absolute;z-index:32;top:calc(env(safe-area-inset-top,0px) + 9px);width:48px;height:48px;border:1px solid rgba(255,255,255,.95);border-radius:15px;background:rgba(255,255,255,.94);box-shadow:0 4px 18px #183d2b2e;backdrop-filter:blur(10px);color:#0d5aa7;display:grid;place-items:center;padding:0}
+  #mobileGpsBtn{left:9px}#mobileStreetBtn{right:9px}
+  .quick-btn svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .quick-btn.active{background:#183d2b;color:#fff}
+  #mobileStreetBtn{color:#0866c6}#mobileStreetBtn.active{background:#0866c6;color:#fff}
+  .mobile-drawer-handle{display:block;position:absolute;z-index:31;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 5px);transform:translateX(-50%);width:76px;height:30px;border:0;border-radius:18px 18px 8px 8px;background:rgba(255,255,255,.95);box-shadow:0 -3px 14px #183d2b24;padding:10px 20px;cursor:pointer}
+  .mobile-drawer-handle span,.drawer-grip{display:block;width:34px;height:4px;border-radius:999px;background:#829088;margin:auto}
+  .mobile-drawer,.mobile-subpanel{position:absolute;display:block;z-index:50;left:7px;right:7px;bottom:calc(env(safe-area-inset-bottom,0px) + 7px);top:auto;width:auto;max-height:min(68dvh,560px);overflow:auto;background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.95);border-radius:22px;box-shadow:0 -8px 34px #183d2b38;backdrop-filter:blur(14px);padding:9px 12px 14px}
+  .mobile-drawer.hidden,.mobile-subpanel.hidden{display:none}
+  .drawer-grip{margin:1px auto 8px;background:#b7c0bb}
+  .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1px 3px 10px}.drawer-head strong{font-size:18px}.drawer-head button{border:0;width:38px;height:38px;border-radius:50%;background:#edf2ef;color:#34473c;font-size:25px;line-height:1}
+  .drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.drawer-grid>button{min-height:92px;border:1px solid #e0e7e3;border-radius:15px;background:#f8faf9;padding:11px;text-align:left;color:#17231c;box-shadow:0 2px 8px #183d2b0d}.drawer-grid>button:last-child{grid-column:1/-1;min-height:74px}.drawer-grid b,.drawer-grid small{display:block}.drawer-grid b{margin:5px 0 2px;font-size:14px}.drawer-grid small{font-size:11px;color:#617168}
+  .drawer-icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:21px;font-weight:800;color:#fff;background:#147fd1}.add-icon{background:#0a9b5a}.export-icon{background:#245d9c}.info-icon{background:#183d2b}.map-icon{background:#147fd1}
+  .basemap-choice{width:100%;display:grid;grid-template-columns:58px 1fr 24px;gap:11px;align-items:center;border:1px solid #e0e7e3;background:#f8faf9;border-radius:15px;padding:9px;margin:8px 0;text-align:left;color:#17231c}.basemap-choice b,.basemap-choice small{display:block}.basemap-choice small{margin-top:3px;color:#617168}.basemap-choice.selected{background:#eaf3ff;border-color:#a8cff5}.basemap-radio{width:18px;height:18px;border:2px solid #8da098;border-radius:50%}.basemap-choice.selected .basemap-radio{border:5px solid #147fd1}
+  .basemap-preview{width:58px;height:50px;border-radius:9px;border:1px solid #d4ddd8;background:#eaf2e8}.osm-preview{background:linear-gradient(135deg,#dfeecf 0 35%,#eef1d5 35% 58%,#d8e9c8 58% 100%)}.ign-preview{background:linear-gradient(135deg,#76945e,#4e744b 45%,#b2a274 46% 55%,#5f8153 56%)}.local-preview{background:#eef2ef}
+  .panel,.info-panel,.add-form{top:auto!important;left:7px!important;right:7px!important;bottom:calc(env(safe-area-inset-bottom,0px) + 7px)!important;transform:none!important;width:auto!important;max-height:min(72dvh,620px)!important;border-radius:22px!important}
+  .status{top:calc(env(safe-area-inset-top,0px) + 64px)}
+  .attribution{bottom:calc(env(safe-area-inset-bottom,0px) + 38px)}
+}
