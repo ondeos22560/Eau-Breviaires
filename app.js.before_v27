@@ -61,17 +61,7 @@ function pointerDistance(){const a=[...pointers.values()];return a.length<2?null
 c.addEventListener('pointerdown',e=>{const p=coordFromEvent(e);pointers.set(e.pointerId,p);c.setPointerCapture(e.pointerId);if(pointers.size===1){dragging=true;last=p;downPos=p;clickMoved=false}else{dragging=false;clickMoved=true;pinchDistance=pointerDistance()}});
 c.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId))return;const p=coordFromEvent(e);pointers.set(e.pointerId,p);if(downPos&&Math.hypot(p.x-downPos.x,p.y-downPos.y)>8)clickMoved=true;if(pointers.size>=2){const d=pointerDistance();if(pinchDistance&&d){zoom=Math.max(10,Math.min(19,zoom+Math.log2(d/pinchDistance)));pinchDistance=d;draw()}return}if(!dragging)return;let dx=p.x-last.x,dy=p.y-last.y,m=merc(center.lon,center.lat),s=scale();center=inv(m.x-dx/s,m.y+dy/s);last=p;draw()});
 function endPointer(e){pointers.delete(e.pointerId);pinchDistance=null;if(pointers.size===1){dragging=true;last=[...pointers.values()][0]}else dragging=false}
-c.addEventListener('pointerup',endPointer);c.addEventListener('pointercancel',endPointer);c.addEventListener('wheel',e=>{
-  e.preventDefault();
-  const p=coordFromEvent(e),v=viewportSize(),oldScale=scale(),oldCenter=merc(center.lon,center.lat);
-  const worldX=oldCenter.x+(p.x-v.w/2)/oldScale,worldY=oldCenter.y-(p.y-v.h/2)/oldScale;
-  const newZoom=Math.max(10,Math.min(19,zoom+(e.deltaY<0?.5:-.5)));
-  if(newZoom===zoom)return;
-  zoom=newZoom;
-  const newScale=scale();
-  center=inv(worldX-(p.x-v.w/2)/newScale,worldY+(p.y-v.h/2)/newScale);
-  draw();
-},{passive:false});
+c.addEventListener('pointerup',endPointer);c.addEventListener('pointercancel',endPointer);c.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(10,Math.min(19,zoom+(e.deltaY<0?.5:-.5)));draw()},{passive:false});
 function closePopup(){popup.classList.add('hidden');popup.style.left='';popup.style.top=''}
 function updateUserPointTools(){const b=document.getElementById('exportKmlBtn');if(b)b.classList.toggle('hidden',userPoints.length===0)}
 function persistUserPoints(){try{localStorage.setItem('eauBreviairesUserPoints',JSON.stringify(userPoints));return true}catch(e){return false}}
