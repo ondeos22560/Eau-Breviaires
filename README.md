@@ -58,3 +58,11 @@ V6 : symbologie métier renforcée (halo), points conservés à petite échelle,
 
 ## V11 – données réelles
 Secteur de travail : 1.70–1.90 E / 48.64–48.76 N. Hydrographie et polygones de plans d’eau extraits de BD TOPAGE 2026. Sources et autres détails hydrographiques extraits de BD TOPO 3.5 D078 du 15/06/2026. Les 11 repères de mares/plans d’eau de la V10 sont conservés. Potabilité non renseignée par défaut.
+
+
+## V22
+- Correction : les messages d'état (barre en bas/haut) ne s'affichaient jamais (conflit avec window.status).
+- Street View général : ouverture par lien, seuil de déplacement avant clic (plus d'ouverture après un glissement).
+- KML : description HTML avec lien Street View cliquable, ExtendedData, partage mobile avec repli téléchargement.
+- Clic : points prioritaires sur polygones ; pas de clic sur objets non dessinés à faible zoom.
+- Version V22 visible (bandeau PC, badge mobile, panneau Couches) ; cache SW eau-breviaires-v22 ; rechargement auto à la mise à jour.
