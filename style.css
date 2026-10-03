@@ -41,3 +41,22 @@ html,body,#app{height:100%;height:100dvh}
 
 /* V26 — informations et guide d’installation */
 .info-panel{left:50%;right:auto;transform:translateX(-50%);width:min(430px,calc(100% - 20px));line-height:1.4}.info-panel p{margin:9px 0}.info-actions{display:grid;gap:8px;margin:12px 0}.info-link{display:block;text-align:center;text-decoration:none;color:#17231c;background:#eef1ef;border:1px solid #d5ddd8}.info-contact{font-size:12px;color:#52645a}.info-contact a{color:#0866c6;word-break:break-all}@media(max-width:600px){.info-panel{top:calc(env(safe-area-inset-top,0px) + 58px);max-height:calc(100dvh - env(safe-area-inset-top,0px) - 70px);overflow:auto}.top .btn{padding-left:7px;padding-right:7px;font-size:10.5px}}
+
+/* V28 — modernisation visuelle uniquement */
+.top{left:12px;right:auto;gap:7px;padding:5px;background:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.92);border-radius:16px;box-shadow:0 3px 16px #0002;backdrop-filter:blur(10px);pointer-events:auto}
+.top .btn{background:transparent;box-shadow:none;border:0;border-radius:11px;padding:10px 12px;color:#183d2b;transition:background .15s ease,transform .15s ease}
+.top .btn:hover{background:#edf3ef}.top .btn:active{transform:translateY(1px)}.top .btn.active{background:#183d2b;color:#fff}
+.version-badge,.brand{display:none!important}
+.panel,.add-form,.popup{border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.96);box-shadow:0 10px 32px #183d2b26;backdrop-filter:blur(12px)}
+.panel{border-radius:18px;padding:16px}.panel-head{padding-bottom:4px;border-bottom:1px solid #e7ece9;margin-bottom:8px}.panel-head h3{font-size:18px}
+.close-layers,.popup .popup-close{display:grid;place-items:center;background:#edf2ef;color:#42554a;border-radius:50%;width:34px;height:34px;line-height:1;font-size:22px;font-weight:500;transition:background .15s ease}
+.popup .popup-close{position:absolute;right:12px;top:12px;float:none}.close-layers:hover,.popup .popup-close:hover{background:#dfe8e2}
+.popup{padding:16px 16px 15px;border-radius:20px;color:#17231c}.popup-title{display:flex;align-items:center;gap:11px;padding-right:38px;margin-bottom:13px}.popup-title b{font-size:20px;line-height:1.15;margin:0 0 4px}.popup-symbol{width:42px;height:42px;display:grid;place-items:center;flex:0 0 42px;border-radius:50%;font-size:20px;font-weight:800;color:#fff;background:#7652e8}.popup-symbol.source{background:#0a9b5a}.popup-symbol.water,.popup-symbol.hydro{background:#147fd1}.popup-symbol.user-symbol{background:#d7191c}.popup-type{display:inline-block;padding:3px 8px;border-radius:999px;background:#eee9ff;color:#5c3dc4;font-size:12px;line-height:1.2}.popup-type.source{background:#e2f6e9;color:#08733f}.popup-type.water,.popup-type.hydro{background:#e5f1ff;color:#0866c6}.popup-type.user-type{background:#fde7e7;color:#a30f17}.popup-details{display:grid;gap:2px}.popup-row{display:grid;grid-template-columns:92px 1fr;gap:10px;padding:9px 10px;border-radius:10px;font-size:13px;line-height:1.35}.popup-row:nth-child(odd){background:#f4f7f5}.popup-row span{color:#52645a}.popup-row strong{font-weight:600;overflow-wrap:anywhere}.popup .streetview-user-point,.popup .remove-user-point{border-radius:11px;padding:10px 12px;margin-top:11px;font-size:13px}.popup .streetview-user-point{background:#e8f2ff;color:#0866c6}.popup .remove-user-point{background:#f5f6f5;color:#8d1b21;border-color:#e1c8ca}
+.row{padding:5px 3px;margin:2px 0;border-radius:9px}.row:hover{background:#f4f7f5}.warn{border-left:3px solid #d19a00;border-radius:10px;background:#fff5d5;padding:10px}.info-actions .info-link,.export-user{border-radius:11px;padding:10px 12px}
+@media(max-width:600px){
+  .top{top:calc(env(safe-area-inset-top,0px) + 6px);left:auto;right:7px;gap:1px;padding:4px;border-radius:15px}
+  .top .btn{padding:8px 7px;font-size:10.5px}
+  .panel,.info-panel,.add-form{top:calc(env(safe-area-inset-top,0px) + 56px);border-radius:18px}
+  .popup{width:calc(100% - 18px)!important;max-width:390px;padding:15px;border-radius:19px}
+  .popup-title b{font-size:19px}.popup-symbol{width:40px;height:40px;flex-basis:40px}.popup-row{grid-template-columns:86px 1fr;padding:8px 9px;font-size:12.5px}
+}

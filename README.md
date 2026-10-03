@@ -94,8 +94,8 @@ Secteur de travail : 1.70–1.90 E / 48.64–48.76 N. Hydrographie et polygones 
 - Cache applicatif : `eau-breviaires-v26`.
 
 
-## V27
+## V28
 
 - Zoom PC à la molette centré sur la position du curseur : le point visé reste sous la souris pendant le zoom.
 - Aucun changement du zoom tactile/pincement.
-- Cache applicatif : `eau-breviaires-v27`.
+- Cache applicatif : `eau-breviaires-v28`.
