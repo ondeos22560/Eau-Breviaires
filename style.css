@@ -122,3 +122,19 @@ html,body,#app{height:100%;height:100dvh}
     -webkit-backdrop-filter:blur(16px) saturate(112%);
   }
 }
+
+
+/* V34 — point sélectionné visible et fiche mobile ancrée en bas */
+@media(max-width:600px){
+  .popup{
+    left:8px!important;
+    right:8px!important;
+    top:auto!important;
+    bottom:calc(env(safe-area-inset-bottom,0px) + 42px)!important;
+    width:auto!important;
+    max-width:none!important;
+    max-height:44dvh;
+    overflow:auto;
+    border-radius:20px 20px 16px 16px;
+  }
+}

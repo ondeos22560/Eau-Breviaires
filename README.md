@@ -115,3 +115,9 @@ V30 : interface mobile terrain avec GPS et Street View fixes en haut, tiroir de 
 - Transparence rendue perceptible tout en conservant la lisibilité.
 - Sur mobile, largeur utile conservée et titres longs autorisés sur plusieurs lignes.
 - Aucun changement des données ni des fonctions cartographiques.
+
+
+## V34
+- Mise en évidence visuelle du point sélectionné sur PC et mobile.
+- Sur mobile, la fiche de l’objet est ancrée en bas de l’écran afin de préserver la visibilité de la carte.
+- Interface PC des popups conservée.
