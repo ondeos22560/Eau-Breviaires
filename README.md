@@ -80,3 +80,7 @@ Secteur de travail : 1.70–1.90 E / 48.64–48.76 N. Hydrographie et polygones 
 
 ## V24
 - Icônes PWA rangées dans le dossier icons/ (manifest, index.html et Service Worker mis à jour). Aucune autre modification.
+
+
+## V25
+- Street View général : un repère orange (losange) marque temporairement l'endroit cliqué. Il disparaît au prochain clic sur la carte, à l'activation d'un outil, ou après 30 s. Distinct des points rouges (observations), du GPS (cible cyan) et de l'hydrographie.
