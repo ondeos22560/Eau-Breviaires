@@ -1,5 +1,6 @@
 const c=document.getElementById('map'),ctx=c.getContext('2d');
 const statusEl=document.getElementById('status');
+const infoBtn=document.getElementById('infoBtn'),infoPanel=document.getElementById('infoPanel'),closeInfo=document.getElementById('closeInfo');
 let clickMoved=false,downPos=null,svMarker=null,svTimer=null;
 let center={lon:1.8131,lat:48.7075}, zoom=13.5, gps=null, dragging=false,last=null, addMode=false, streetViewMode=false, addLocation=null, userPoints=[], data={water:[],sources:[],points:[],hydro:[],commune:[]};
 let gpsWatchId=null;
@@ -107,7 +108,7 @@ c.addEventListener('click',e=>{
   if(!best){bd=22;for(const group of groups){for(const f of group){const d=featureHitDistance(f,p);if(d<bd){best=f;bd=d}}if(best)break}}
   if(best)showFeaturePopup(best,p);else closePopup();
 });
-layersBtn.onclick=()=>{closePopup();panel.classList.toggle('hidden')};document.getElementById('closeLayers').onclick=()=>panel.classList.add('hidden');['showWater','showSources','showPoints','showUserPoints','showHydro','showCommune'].forEach(id=>document.getElementById(id).onchange=draw);document.getElementById('exportKmlBtn').onclick=exportUserPointsKml;
+layersBtn.onclick=()=>{closePopup();infoPanel.classList.add('hidden');panel.classList.toggle('hidden')};document.getElementById('closeLayers').onclick=()=>panel.classList.add('hidden');['showWater','showSources','showPoints','showUserPoints','showHydro','showCommune'].forEach(id=>document.getElementById(id).onchange=draw);document.getElementById('exportKmlBtn').onclick=exportUserPointsKml;
 function setBasemap(which){online.checked=which==='osm';satellite.checked=which==='satellite';statusEl.textContent='';draw()}
 online.onchange=()=>setBasemap(online.checked?'osm':'local');satellite.onchange=()=>setBasemap(satellite.checked?'satellite':'local');
 gpsBtn.onclick=()=>{
@@ -118,8 +119,9 @@ gpsBtn.onclick=()=>{
 };
 
 try{userPoints=JSON.parse(localStorage.getItem('eauBreviairesUserPoints')||'[]');if(!Array.isArray(userPoints))userPoints=[]}catch(e){userPoints=[]}updateUserPointTools();if(isMobileDevice()){const b=document.getElementById('exportKmlBtn');if(b)b.textContent='Partager les points en KML'}
-streetViewBtn.onclick=()=>{clearSvMarker(false);streetViewMode=!streetViewMode;addMode=false;addLocation=null;addForm.classList.add('hidden');panel.classList.add('hidden');closePopup();streetViewBtn.classList.toggle('active',streetViewMode);statusEl.textContent=streetViewMode?'Cliquez sur la carte pour ouvrir Street View':'';draw()};
-addBtn.onclick=()=>{clearSvMarker(false);streetViewMode=false;streetViewBtn.classList.remove('active');addMode=true;addLocation=null;closePopup();panel.classList.add('hidden');addForm.classList.add('hidden');statusEl.textContent='Touchez la carte à l’emplacement du point à ajouter';draw()};
+infoBtn.onclick=()=>{clearSvMarker(false);streetViewMode=false;streetViewBtn.classList.remove('active');addMode=false;addLocation=null;addForm.classList.add('hidden');panel.classList.add('hidden');closePopup();infoPanel.classList.toggle('hidden');statusEl.textContent='';draw()};closeInfo.onclick=()=>infoPanel.classList.add('hidden');
+streetViewBtn.onclick=()=>{infoPanel.classList.add('hidden');clearSvMarker(false);streetViewMode=!streetViewMode;addMode=false;addLocation=null;addForm.classList.add('hidden');panel.classList.add('hidden');closePopup();streetViewBtn.classList.toggle('active',streetViewMode);statusEl.textContent=streetViewMode?'Cliquez sur la carte pour ouvrir Street View':'';draw()};
+addBtn.onclick=()=>{infoPanel.classList.add('hidden');clearSvMarker(false);streetViewMode=false;streetViewBtn.classList.remove('active');addMode=true;addLocation=null;closePopup();panel.classList.add('hidden');addForm.classList.add('hidden');statusEl.textContent='Touchez la carte à l’emplacement du point à ajouter';draw()};
 closeAdd.onclick=()=>{addForm.classList.add('hidden');addLocation=null;addMode=false;statusEl.textContent='Ajout annulé';draw()};
 removeAdd.onclick=()=>{addForm.classList.add('hidden');addLocation=null;addMode=false;statusEl.textContent='Point retiré • ajout annulé';draw()};
 saveAdd.onclick=()=>{if(!addLocation)return;const description=addDescription.value.trim();const f={type:'Feature',properties:{type:'Point nouveau',description,date_heure:new Date().toLocaleString('fr-FR'),source:'Contribution utilisateur locale',statut:'À vérifier'},geometry:{type:'Point',coordinates:[addLocation.lon,addLocation.lat]}};userPoints.push(f);const saved=persistUserPoints();addForm.classList.add('hidden');addDescription.value='';addLocation=null;const userPointLabel=document.querySelector('label[for="showUserPoints"]');if(userPointLabel)userPointLabel.innerHTML=`<span class="dot user-point"></span>Points nouveaux (${userPoints.length})`;

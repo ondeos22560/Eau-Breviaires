@@ -1,7 +1,7 @@
-const CACHE='eau-breviaires-v25';
+const CACHE='eau-breviaires-v26';
 const TILES='eau-breviaires-tuiles';
 const MAX_TILES=800;
-const CORE=['./','./index.html','./style.css','./app.js','./manifest.json','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-512-maskable.png','./data/eau.geojson','./data/sources.geojson','./data/points_eau.geojson','./data/plans_eau.geojson','./data/hydrographie.geojson','./data/commune.geojson'];
+const CORE=['./','./index.html','./style.css','./app.js','./manifest.json','./docs/Installation_Eau_Breviaires.pdf','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-512-maskable.png','./data/eau.geojson','./data/sources.geojson','./data/points_eau.geojson','./data/plans_eau.geojson','./data/hydrographie.geojson','./data/commune.geojson'];
 const TILE_HOSTS=['tile.openstreetmap.org','data.geopf.fr'];
 // Installation : tout le nécessaire hors ligne est téléchargé d'un coup (sans passer par le cache HTTP).
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting())));

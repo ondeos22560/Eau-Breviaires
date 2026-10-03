@@ -84,3 +84,11 @@ Secteur de travail : 1.70–1.90 E / 48.64–48.76 N. Hydrographie et polygones 
 
 ## V25
 - Street View général : un repère orange (losange) marque temporairement l'endroit cliqué. Il disparaît au prochain clic sur la carte, à l'activation d'un outil, ou après 30 s. Distinct des points rouges (observations), du GPS (cible cyan) et de l'hydrographie.
+
+
+## V26
+- Ajout d’un bouton `Infos` sur PC et mobile.
+- Fenêtre de présentation de l’application avec avertissement de potabilité et contact `joyeux.xavier@gmail.com`.
+- Guide PDF d’installation intégré pour iPhone, Android et PC.
+- Le guide PDF est inclus dans le cache hors ligne de l’application.
+- Cache applicatif : `eau-breviaires-v26`.
