@@ -66,3 +66,17 @@ Secteur de travail : 1.70–1.90 E / 48.64–48.76 N. Hydrographie et polygones 
 - KML : description HTML avec lien Street View cliquable, ExtendedData, partage mobile avec repli téléchargement.
 - Clic : points prioritaires sur polygones ; pas de clic sur objets non dessinés à faible zoom.
 - Version V22 visible (bandeau PC, badge mobile, panneau Couches) ; cache SW eau-breviaires-v22 ; rechargement auto à la mise à jour.
+
+
+## V23 — fiabilisation hors ligne
+- Service Worker : l'application est servie depuis le cache (instantané, sans réseau ou avec réseau faible), puis rafraîchie en arrière-plan. Installation sans cache HTTP.
+- Tuiles OSM / IGN déjà consultées conservées (max 800) et réutilisables hors ligne ; ce cache survit aux changements de version.
+- Les tuiles en échec sont de nouveau demandées au retour du réseau (avant : définitivement blanches jusqu'au rechargement).
+- Messages Hors ligne / Connexion rétablie ; Street View indique qu'il faut Internet.
+- Enregistrement des points sécurisé (message d'alerte si le stockage du navigateur est refusé) ; stockage persistant demandé.
+- Icônes PWA ajoutées (installation sur l'écran d'accueil).
+- Pas de rechargement automatique pendant la saisie d'un point.
+
+
+## V24
+- Icônes PWA rangées dans le dossier icons/ (manifest, index.html et Service Worker mis à jour). Aucune autre modification.
