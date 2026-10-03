@@ -10,3 +10,20 @@
 .popup .popup-close{float:right;border:0;background:none;font-size:20px;cursor:pointer}.popup .remove-user-point{display:block;float:none;width:100%;margin-top:10px;padding:8px 10px;border:1px solid #b9c4bd;border-radius:8px;background:#f4f6f5;font-weight:700;cursor:pointer}.add-actions{display:flex;gap:8px;margin:4px 0 8px}.add-actions .btn{flex:1}.add-form .secondary{background:#eef1ef;color:#17231c}.add-form .add-actions .primary{width:auto;margin:0}.add-form .add-actions .secondary{margin:0}
 
 .dot.user-point{background:#d7191c}
+
+/* V17 — interface mobile compacte et viewport dynamique */
+html,body,#app{height:100%;height:100dvh}
+#map{position:absolute;inset:0;width:100%;height:100%}
+@media(max-width:600px){
+  .brand{display:none}
+  .top{top:calc(env(safe-area-inset-top,0px) + 6px);left:auto;right:7px;width:auto;gap:5px;padding:4px;background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.9);border-radius:16px;box-shadow:0 2px 12px #0002;backdrop-filter:blur(8px);pointer-events:auto}
+  .top .spacer{display:none}
+  .top .btn{padding:8px 10px;border-radius:11px;box-shadow:none;border:0;background:transparent;font-size:12px}
+  .top .btn.active{background:#183d2b;color:#fff}
+  .panel{top:calc(env(safe-area-inset-top,0px) + 58px);right:7px;max-height:calc(100dvh - env(safe-area-inset-top,0px) - 70px)}
+  .add-form{top:calc(env(safe-area-inset-top,0px) + 58px);max-height:calc(100dvh - env(safe-area-inset-top,0px) - 70px);overflow:auto}
+  .status{left:7px;bottom:auto;top:calc(env(safe-area-inset-top,0px) + 58px);max-width:62%;padding:4px 7px;font-size:10px;background:rgba(255,255,255,.78);box-shadow:none;pointer-events:none}
+  .attribution{right:3px;bottom:calc(env(safe-area-inset-bottom,0px) + 2px);max-width:none;padding:1px 3px;border-radius:3px;font-size:7px;background:rgba(255,255,255,.62);box-shadow:none;opacity:.78}
+}
+
+.status:empty{display:none}
